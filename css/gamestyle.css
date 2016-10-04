@@ -4,11 +4,11 @@ body {
 }
 
 .player {
-  height: 80px;
-  width: 70px;
+  width: 60px;
+  height: 60px;
 
   bottom: 5px;
-  background-color: orange;
+  background-color: purple;
   background-image: url('../assets/stick2.png');
   background-size: cover;
   position: absolute;
