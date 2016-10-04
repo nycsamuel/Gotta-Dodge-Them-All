@@ -14,18 +14,19 @@ $(document).ready(function() {
     // 39 => move player to right
     if (event.which === 37) {
       // check for left edge
-      if (left <= 0) {
-        left = 0;
+      if (left <= 8) {
+        left = 8;
       } else {
-        player.css('left', left - 20);
+        console.log(left);
+        player.css('left', left - 15);
       }
     }
     if (event.which === 39) {
       // check for right edge
-      if (left > edge) {
+      if (left >= edge) {
         left = edge;
       } else {
-        player.css('left', left + 20);
+        player.css('left', left + 15);
       }
     }
   }
@@ -37,7 +38,7 @@ $(document).ready(function() {
     var $newRock = $('<div>');
     $newRock.addClass('rocks');
 
-    // randomize rock's width and height
+    // randomize rock's width & height & top & left
     var width =   Math.round((Math.random() * 100) + 50);
     var height =  Math.round((Math.random() * 60) + 30);
     console.log(width, height);
@@ -47,18 +48,14 @@ $(document).ready(function() {
 
     /**
       * Need to make sure the rocks don't overlap
-      *
     **/
 
     $newRock.css({'width': width, 'height': height, 'background-color': 'red', 'display': 'inline-block', 'position': 'absolute', 'top': top, 'left': left});
     sky.append($newRock);
 
     // make it rain flaming rocks
-    fall();
+    fall($newRock);
   }
-
-  // update periodically to speed up
-  function update() {}
 
   // update the rock's top position incrementally
   // incremental value gets higher when the pace increases
@@ -67,17 +64,19 @@ $(document).ready(function() {
   **/
   function fall(target) {
     // var rocks = $('.rocks');
-    var top = rocks.offset().top;
-    var timerId = setInterval(function() {
+    var top = target.offset().top;
+    var rockTimer = setInterval(function() {
       target.css('top', top + 10);
-    }, 1000);
+    }, 500);
   }
 
+  // update periodically to speed up
+  function update() {}
 
 
   $('body').on('keydown', move)
 
   // in loop, update and make rocks fall
-  // var timerId = setInterval(draw, 1000);
+  // var timerId = setInterval(draw, 2000);
 
 });
