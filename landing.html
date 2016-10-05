@@ -10,9 +10,26 @@
   <script src="script/landingscript.js"></script>
 </head>
 <body>
-  <div class="img1"></div>
-  <div class="img2"></div>
+  <div class="parent-container">
+    <div class="welcome-container">
+      <!-- <h1 class="welcome">Welcome</h1> -->
+    </div>
+    <div class="form-container flex-container">
+      <div class="flex-item">
+        <form action="game.html" method="get">
+          <!-- name -->
+          <label class="name">Name</label> <br>
+          <input class="name" type="text" name="fname" placeholder="First"> <br>
+          <input class="name" type="text" name="lname" placeholder="Last"> <br>
 
+          <!-- username -->
+          <label class="username">Username</label> <br>
+          <input type="text" name="uname" class="username"> <br>
 
+          <input type="submit">
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

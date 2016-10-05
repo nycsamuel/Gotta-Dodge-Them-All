@@ -17,8 +17,8 @@ $(document).ready(function() {
       if (left <= 8) {
         left = 8;
       } else {
-        console.log(left);
         player.css('left', left - 15);
+        // console.log(player.offset().left);
       }
     }
     if (event.which === 39) {
@@ -27,24 +27,25 @@ $(document).ready(function() {
         left = edge;
       } else {
         player.css('left', left + 15);
+        // console.log(player.offset().left);
       }
     }
   }
 
+  var counter = 0;
   // draw divs as burning rocks
   function draw() {
     var edge = $('body').width();
     var sky = $('.rock-container');
     var $newRock = $('<div>');
     $newRock.addClass('rocks');
+    // counter++;
 
     // randomize rock's width & height & top & left
-    var width =   Math.round((Math.random() * 100) + 50);
+    var width =   Math.round((Math.random() * 80) + 50);
     var height =  Math.round((Math.random() * 60) + 30);
-    console.log(width, height);
     var top = 0;
     var left = Math.round(Math.random() * (edge - 60));
-    console.log(top, left);
 
     /**
       * Need to make sure the rocks don't overlap
@@ -53,8 +54,9 @@ $(document).ready(function() {
     $newRock.css({'width': width, 'height': height, 'background-color': 'red', 'display': 'inline-block', 'position': 'absolute', 'top': top, 'left': left});
     sky.append($newRock);
 
+    console.log('width', width, 'height', height, 'top', top, 'left', left);
     // make it rain flaming rocks
-    fall($newRock);
+    // fall($newRock);
   }
 
   // update the rock's top position incrementally
@@ -63,20 +65,23 @@ $(document).ready(function() {
     * the fall() targets ALL rocks
   **/
   function fall(target) {
-    // var rocks = $('.rocks');
-    var top = target.offset().top;
-    var rockTimer = setInterval(function() {
-      target.css('top', top + 10);
-    }, 500);
+    // var rocks = $('.rocks
+    var top = $(this).css('top');
+    $('.rock').css('top', top += 10);
+    // var rockTimer = setInterval(function() {
+    // }, 500);
   }
 
   // update periodically to speed up
-  function update() {}
+  // also check for all rocks under the screen to delete them
+  function update() {
+  }
 
 
   $('body').on('keydown', move)
 
   // in loop, update and make rocks fall
-  // var timerId = setInterval(draw, 2000);
+  // setInterval(draw, 3000);
+  // setInterval(fall, 1000);
 
 });
