@@ -9,8 +9,8 @@ body {
   height: 60px;
 
   bottom: 5px;
-  background-color: purple;
-  background-image: url('../assets/stick2.png');
+  /*background-color: purple;*/
+  background-image: url('../assets/trainer.png');
   background-size: cover;
   position: absolute;
 }

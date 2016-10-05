@@ -32,29 +32,38 @@ $(document).ready(function() {
     }
   }
 
-  var counter = 0;
-  // draw divs as burning rocks
+  // draw 50 x 50 of fireballs
   function draw() {
     var edge = $('body').width();
+    var width = 50;
+    var height = 50;
+    var top = 0;
+    var left = Math.round(Math.random() * (edge - 60));
+    // randomize rock's width & height & top & left
+    // var width =   Math.round((Math.random() * 80) + 50);
+    // var height =  Math.round((Math.random() * 60) + 30);
+    console.log('width', width, 'height', height, 'top', top, 'left', left);
+
     var sky = $('.rock-container');
     var $newRock = $('<div>');
     $newRock.addClass('rocks');
-    // counter++;
-
-    // randomize rock's width & height & top & left
-    var width =   Math.round((Math.random() * 80) + 50);
-    var height =  Math.round((Math.random() * 60) + 30);
-    var top = 0;
-    var left = Math.round(Math.random() * (edge - 60));
+    $newRock.css({
+      'position': 'absolute',
+      'background': 'url("assets/fireball3.gif")',
+      'background-size': 'cover',
+      'display': 'inline-block',
+      'left': left,
+      'top': top,
+      'width': width,
+      'height': height
+    })
+    sky.append($newRock);
 
     /**
       * Need to make sure the rocks don't overlap
     **/
 
-    $newRock.css({'width': width, 'height': height, 'background-color': 'red', 'display': 'inline-block', 'position': 'absolute', 'top': top, 'left': left});
-    sky.append($newRock);
 
-    console.log('width', width, 'height', height, 'top', top, 'left', left);
     // make it rain flaming rocks
     // fall($newRock);
   }
@@ -77,11 +86,10 @@ $(document).ready(function() {
   function update() {
   }
 
-
   $('body').on('keydown', move)
 
   // in loop, update and make rocks fall
-  // setInterval(draw, 3000);
+  // setInterval(draw, 2000);
   // setInterval(fall, 1000);
 
 });
