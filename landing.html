@@ -12,24 +12,28 @@
 <body>
   <div class="parent-container">
     <div class="welcome-container">
-      <!-- <h1 class="welcome">Welcome</h1> -->
+      <h1 class="welcome">Welcome</h1>
+      <p class="rules-to-start">Click Here To Start</p>
+      <p class="game-rules">The trainer must dodge the angry Charzard's attack. Move left and right to dodge the fireballs falling from the sky! Charzard gets angry as the time goes by and will attack faster. Get ready to catch Blastoise on the run fight the fire!</p>
     </div>
+
     <div class="form-container flex-container">
       <div class="flex-item">
         <form action="game.html" method="get">
+          <label class="input-info">Fill out your info to play</label>
+
           <!-- name -->
-          <label class="name">Name</label> <br>
           <input class="name" type="text" name="fname" placeholder="First"> <br>
           <input class="name" type="text" name="lname" placeholder="Last"> <br>
 
           <!-- username -->
-          <label class="username">Username</label> <br>
-          <input type="text" name="uname" class="username"> <br>
+          <input type="text" name="uname" class="username" placeholder="username"> <br>
 
-          <input type="submit">
+          <input type="submit" value="Start">
         </form>
       </div>
     </div>
+
   </div>
 </body>
 </html>

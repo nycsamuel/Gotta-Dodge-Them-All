@@ -11,15 +11,28 @@ body {
 .welcome-container, .form-container {
   width: 500px;
   height: 400px;
-  background-color: lightgray;
+  /*background-color: lightgray;*/
   position: absolute;
   top: 120px;
 }
 
+
+.welcome-container {
+  text-align: center;
+}
+
+.welcome {
+  font-size: 5em;
+}
+
+.welcome-container h1 {
+  margin-bottom: -1px;
+}
+
 .flex-container {
+  align-items: stretch;
   display: flex;
   justify-content: center;
-  align-items: stretch;
 }
 
 .flex-item {
@@ -32,9 +45,22 @@ form, input {
   height: 60px;
   border-radius: 2px;
   box-sizing: border-box;
+  font-size: 20px;
   margin: 5px auto;
+}
+
+input {
+  border: 1px solid black;
 }
 
 input[type=text] {
   padding: 10px;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+}
+
+.form-container, .flex-container {
+  display: none;
 }
