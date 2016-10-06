@@ -1,6 +1,7 @@
 body {
   background: url('../assets/charzard.gif');
   background-size: cover;
+  overflow: hidden;
   text-align: center;
 }
 

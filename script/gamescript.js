@@ -8,44 +8,60 @@ $(document).ready(function() {
   player.css('left', playerPosition);
 
   // counter for falling speed
-  // decreasing time makes the fireball faster
-  var time = 1000;
+  // decreasing speed makes the fireball faster
+  var speed = 1000;
 
+  // check if paused
+  var paused = false;
 
 
   function move(event) {
     var left = player.offset().left;
     var edge = $('body').width() - player.width();
 
-    // 37 => move player to left
-    // 39 => move player to right
-    if (event.which === 37) {
-      // check for left edge
-      if (left <= 8) {
-        left = 8;
-      } else {
-        player.css('left', left - 15);
-        // console.log(player.offset().left);
-      }
-    }
-    if (event.which === 39) {
-      // check for right edge
-      if (left >= edge) {
-        left = edge;
-      } else {
-        player.css('left', left + 15);
-        // console.log(player.offset().left);
-      }
+    var key = event.which;
+    switch (key) {
+      // left
+      case 37:
+        if (left <= 8) {
+          left = 8;
+        } else {
+          player.css('left', left - 15);
+        }
+        break;
+      // right
+      case 39:
+        if (left >= edge) {
+          left = edge;
+        } else {
+          player.css('left', left + 15);
+        }
+        break;
+      // pause
+      case 27:
+        if (!paused) {
+          clearInterval(timerId);
+          $('.fires').stop();
+          paused = !paused;
+        } else {
+          paused = !paused;
+          var fires = $('.fires');
+          for (var i = 0; i < fires.length; i++ ) {
+            fall(fires.eq(i));
+          }
+          timerId = setInterval(draw, 1000);
+        }
+        break;
     }
   }
 
-  // draw 50 x 50 of fireballs
+  // draw fireballs
   var edgeWidth = $(window).width();
   var edgeHeight = $(window).height();
-  var firePosition = edgeHeight - 50;
+  var firePosition = edgeHeight;
   function draw() {
-    var width = 50;
-    var height = 50;
+    var width = 80;
+    var height = 80;
     var top = 0;
     var left = Math.round(Math.random() * (edgeWidth - 60));
     var sky = $('.fire-container');
@@ -65,8 +81,8 @@ $(document).ready(function() {
     });
     sky.append($newFire1);
 
-
     var $newFire2 = $('<div>');
+    left = Math.round(Math.random() * (edgeWidth - 60));
     $newFire2.addClass('fires');
     $newFire2.css({
       'position': 'absolute',
@@ -84,13 +100,9 @@ $(document).ready(function() {
     fall($newFire2);
   } // draw() end
 
-  // update periodically to speed up
-  // also check for all fires under the screen to delete them
-  function update() {
-  }
   function fall(fire) {
     console.log(fire);
-    fire.animate({top: firePosition}, time * 3, function() {
+    fire.animate({top: firePosition}, speed * 3, function() {
       // remove fire when it reaches the bottom
       if ($(this).position().top >= firePosition) {
         $(this).remove();
@@ -104,11 +116,9 @@ $(document).ready(function() {
 
 
 
-
-
   $('body').on('keydown', move)
 
   // in loop, update and make fires fall
-  // setInterval(draw, 1000);
+  var timerId = setInterval(draw, 1000);
 
 });
