@@ -134,7 +134,7 @@ $(document).ready(function() {
           fires.stop();
           clearInterval(timerId);
           // fires.eq(i).remove()
-          // 
+          
         }
       }
   }
