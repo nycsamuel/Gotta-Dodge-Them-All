@@ -1,18 +1,19 @@
 // dom content loaded
 $(document).ready(function() {
-  // place player at the middle
-  var player = $('.player');
   var windowWidth = $('body').width();
+  var player = $('.player');
   var playerWidth = player.width();
+  var playerHeight = player.height();
+
+  // place player at the middle
   var playerPosition = (windowWidth/2) - (playerWidth/2);
   player.css('left', playerPosition);
 
-  // counter for falling speed
-  // decreasing speed makes the fireball faster
-  var speed = 1000;
+  var speed = 3000; // counter for falling speed
 
-  // check if paused
   var paused = false;
+  var pauseMsg = $('.msg');
+  pauseMsg.hide();
 
 
   function move(event) {
@@ -43,6 +44,7 @@ $(document).ready(function() {
           clearInterval(timerId);
           $('.fires').stop();
           paused = !paused;
+          pauseMsg.fadeIn();
         } else {
           paused = !paused;
           var fires = $('.fires');
@@ -50,6 +52,7 @@ $(document).ready(function() {
             fall(fires.eq(i));
           }
           timerId = setInterval(draw, 1000);
+          pauseMsg.fadeOut();
         }
         break;
     }
@@ -72,12 +75,14 @@ $(document).ready(function() {
     $newFire1.css({
       'position': 'absolute',
       'background': 'url("assets/fireball3.gif")',
+      // 'background-color': 'purple',
       'background-size': 'cover',
       'display': 'inline-block',
       'left': left,
       'top': top,
       'width': width,
-      'height': height
+      'height': height,
+      'z-index': -1
     });
     sky.append($newFire1);
 
@@ -87,12 +92,14 @@ $(document).ready(function() {
     $newFire2.css({
       'position': 'absolute',
       'background': 'url("assets/fireball3.gif")',
+      // 'background-color': 'purple',
       'background-size': 'cover',
       'display': 'inline-block',
       'left': left,
       'top': top,
       'width': width,
-      'height': height
+      'height': height,
+      'z-index': -1
     });
     sky.append($newFire2);
 
@@ -101,17 +108,35 @@ $(document).ready(function() {
   } // draw() end
 
   function fall(fire) {
-    console.log(fire);
-    fire.animate({top: firePosition}, speed * 3, function() {
+    // console.log(fire);
+    fire.animate({top: firePosition}, speed, function() {
       // remove fire when it reaches the bottom
       if ($(this).position().top >= firePosition) {
         $(this).remove();
       }
-
       $(this).css({
         bottom: '-50'
       });
     });
+  }
+
+  function checkCollision() {
+    var fires = $('.fires');
+      for (var i = 0; i < fires.length; i++ ) {
+        var fireTop = fires.eq(i).offset().top
+        var fireLeft = fires.eq(i).offset().left;
+        var playerTop = player.offset().top;
+        var playerLeft = player.offset().left;
+
+        if (Math.abs(playerTop - fireTop) < 60 && Math.abs(playerLeft - fireLeft) < 60) {
+          console.log('it burnss');
+          player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
+          fires.stop();
+          clearInterval(timerId);
+          // fires.eq(i).remove()
+          // 
+        }
+      }
   }
 
 
@@ -120,5 +145,6 @@ $(document).ready(function() {
 
   // in loop, update and make fires fall
   var timerId = setInterval(draw, 1000);
+  setInterval(checkCollision, 100);
 
 });
