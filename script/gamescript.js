@@ -109,6 +109,6 @@ $(document).ready(function() {
   $('body').on('keydown', move)
 
   // in loop, update and make fires fall
-  setInterval(draw, 1000);
+  // setInterval(draw, 1000);
 
 });
