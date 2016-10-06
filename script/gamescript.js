@@ -1,10 +1,17 @@
 // dom content loaded
 $(document).ready(function() {
+  // place player at the middle
   var player = $('.player');
   var windowWidth = $('body').width();
   var playerWidth = player.width();
   var playerPosition = (windowWidth/2) - (playerWidth/2);
   player.css('left', playerPosition);
+
+  // counter for falling speed
+  // decreasing time makes the fireball faster
+  var time = 1000;
+
+
 
   function move(event) {
     var left = player.offset().left;
@@ -33,21 +40,20 @@ $(document).ready(function() {
   }
 
   // draw 50 x 50 of fireballs
+  var edgeWidth = $(window).width();
+  var edgeHeight = $(window).height();
+  var firePosition = edgeHeight - 50;
   function draw() {
-    var edge = $('body').width();
     var width = 50;
     var height = 50;
     var top = 0;
-    var left = Math.round(Math.random() * (edge - 60));
-    // randomize rock's width & height & top & left
-    // var width =   Math.round((Math.random() * 80) + 50);
-    // var height =  Math.round((Math.random() * 60) + 30);
-    console.log('width', width, 'height', height, 'top', top, 'left', left);
+    var left = Math.round(Math.random() * (edgeWidth - 60));
+    var sky = $('.fire-container');
 
-    var sky = $('.rock-container');
-    var $newRock = $('<div>');
-    $newRock.addClass('rocks');
-    $newRock.css({
+    /* Need to make sure the fire don't overlap */
+    var $newFire1 = $('<div>');
+    $newFire1.addClass('fires');
+    $newFire1.css({
       'position': 'absolute',
       'background': 'url("assets/fireball3.gif")',
       'background-size': 'cover',
@@ -56,40 +62,53 @@ $(document).ready(function() {
       'top': top,
       'width': width,
       'height': height
-    })
-    sky.append($newRock);
-
-    /**
-      * Need to make sure the rocks don't overlap
-    **/
+    });
+    sky.append($newFire1);
 
 
-    // make it rain flaming rocks
-    // fall($newRock);
-  }
+    var $newFire2 = $('<div>');
+    $newFire2.addClass('fires');
+    $newFire2.css({
+      'position': 'absolute',
+      'background': 'url("assets/fireball3.gif")',
+      'background-size': 'cover',
+      'display': 'inline-block',
+      'left': left,
+      'top': top,
+      'width': width,
+      'height': height
+    });
+    sky.append($newFire2);
 
-  // update the rock's top position incrementally
-  // incremental value gets higher when the pace increases
-  /**
-    * the fall() targets ALL rocks
-  **/
-  function fall(target) {
-    // var rocks = $('.rocks
-    var top = $(this).css('top');
-    $('.rock').css('top', top += 10);
-    // var rockTimer = setInterval(function() {
-    // }, 500);
-  }
+    fall($newFire1);
+    fall($newFire2);
+  } // draw() end
 
   // update periodically to speed up
-  // also check for all rocks under the screen to delete them
+  // also check for all fires under the screen to delete them
   function update() {
   }
+  function fall(fire) {
+    console.log(fire);
+    fire.animate({top: firePosition}, time * 3, function() {
+      // remove fire when it reaches the bottom
+      if ($(this).position().top >= firePosition) {
+        $(this).remove();
+      }
+
+      $(this).css({
+        bottom: '-50'
+      });
+    });
+  }
+
+
+
+
 
   $('body').on('keydown', move)
 
-  // in loop, update and make rocks fall
-  // setInterval(draw, 2000);
-  // setInterval(fall, 1000);
+  // in loop, update and make fires fall
+  setInterval(draw, 1000);
 
 });
