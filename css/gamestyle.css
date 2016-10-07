@@ -23,12 +23,27 @@ body {
   color: white;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin-top: 150px;
 }
 
-.pause-msg {
+.flex-item {
   font-size: 6em;
   color: purple;
   display: flex;
   justify-content: center;
+}
+
+.start-over {
+  border: 2px solid black;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 36px;
+  width: 250px;
+  position: absolute;
+  margin-top: -70px;
+}
+
+a {
+  text-decoration: none;
 }

@@ -12,8 +12,12 @@ $(document).ready(function() {
   var speed = 3000; // counter for falling speed
 
   var paused = false;
-  var pauseMsg = $('.msg');
-  pauseMsg.hide();
+  var msg = $('.msg');
+  var startOverMsg = $('h2');
+  var msgLeft = $('body').width()/2 - startOverMsg.width()/2;
+  startOverMsg.css('margin-left', msgLeft);
+  startOverMsg.hide();
+  msg.hide();
 
 
   function move(event) {
@@ -44,7 +48,9 @@ $(document).ready(function() {
           clearInterval(timerId);
           $('.fires').stop();
           paused = !paused;
-          pauseMsg.fadeIn();
+          msg.children().first().next().hide(); // game over msg
+          // msg.children().last().hide(); // start over button
+          msg.fadeIn();
         } else {
           paused = !paused;
           var fires = $('.fires');
@@ -52,7 +58,7 @@ $(document).ready(function() {
             fall(fires.eq(i));
           }
           timerId = setInterval(draw, 1000);
-          pauseMsg.fadeOut();
+          msg.fadeOut();
         }
         break;
     }
@@ -134,7 +140,12 @@ $(document).ready(function() {
           fires.stop();
           clearInterval(timerId);
           // fires.eq(i).remove()
-          
+          // game over message
+          msg.children().first().hide();
+          msg.children().first().next().show();
+          // msg.children().last().show();
+          startOverMsg.show();
+          msg.fadeIn();
         }
       }
   }
