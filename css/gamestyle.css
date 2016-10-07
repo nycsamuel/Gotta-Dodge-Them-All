@@ -24,7 +24,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 80px;
 }
 
 .flex-item {
@@ -46,4 +46,21 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.timer {
+  width: 200px;
+  height: 50px;
+  background-color: yellow;
+  opacity: .8;
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 46px;
+  margin-right: 600px;
+}
+
+.caught {
+  background-image: url('../assets/pokeball.gif');
+  background-size: cover;
 }

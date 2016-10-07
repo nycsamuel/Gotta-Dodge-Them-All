@@ -1,6 +1,7 @@
 // dom content loaded
 $(document).ready(function() {
   // hide puase and game over msg
+  var gameover = undefined;
   var msg = $('.msg');
   var startOverMsg = $('h2');
   var msgLeft = $('body').width()/2 - startOverMsg.width()/2;
@@ -25,35 +26,41 @@ $(document).ready(function() {
 
 
   function move(event) {
-    var left = player.offset().left;
-    var edge = $('body').width() - player.width();
+    if (gameover) {
+      // do not allow gamer to continue
+    } else {
+      var left = player.offset().left;
+      var edge = $('body').width() - player.width();
 
-    var key = event.which;
-    switch (key) {
-      // left
-      case 37:
+      var key = event.which;
+      switch (key) {
+        // left
+        case 37:
         if (left <= 8) {
           left = 8;
         } else {
           player.css('left', left - 15);
         }
         break;
-      // right
-      case 39:
+        // right
+        case 39:
         if (left >= edge) {
           left = edge;
         } else {
           player.css('left', left + 15);
         }
         break;
-      // pause
-      case 27:
+        // pause
+        case 27:
         if (!paused) {
           clearInterval(timerId);
           $('.fires').stop();
           $('.helpers').stop()
           paused = !paused;
           msg.children().first().next().hide(); // game over msg
+          if (gameover) {
+            msg.children().first().next().show();
+          }
           msg.fadeIn();
         } else {
           paused = !paused;
@@ -71,6 +78,7 @@ $(document).ready(function() {
           msg.fadeOut();
         }
         break;
+      }
     }
   }
 
@@ -153,6 +161,7 @@ $(document).ready(function() {
         msg.children().first().next().show();
         startOverMsg.show();
         msg.fadeIn();
+        gameover = true;
       }
     } // loop fires
 
@@ -164,12 +173,16 @@ $(document).ready(function() {
       if (Math.abs(playerTop - helperTop) < 40 && Math.abs(playerLeft - helperLeft) < 40) {
         // one catch logs more than once!!
         console.log('caught a pokemon!');
+
+        // change class of the caught pokemon so it won't be counted
         helpers.eq(j).css({
           'background': 'url("assets/pokeball.gif")',
           'background-size': 'cover'
         });
-        
+        helpers.eq(j).attr('class', 'caught');
+        // break;
       }
+
     }
   }
 
@@ -178,7 +191,7 @@ $(document).ready(function() {
 
   // in loop, update and make fires fall
   var timerId = setInterval(draw, speed);
-  setInterval(checkCollision, 100);
+  var caughtPokemon = setInterval(checkCollision, 100);
 
 });
 
