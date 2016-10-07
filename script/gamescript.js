@@ -9,6 +9,11 @@ $(document).ready(function() {
   startOverMsg.hide();
   msg.hide();
 
+  // timer
+  var startTime = Date.now();
+  var endTime = undefined;
+  var timeDuration = undefined;
+
   // place player at the middle
   var windowWidth = $('body').width();
   var player = $('.player');
@@ -53,7 +58,9 @@ $(document).ready(function() {
         // pause
         case 27:
         if (!paused) {
-          clearInterval(timerId);
+          endTime = Date.now()
+          calculateDuration(endTime);
+          clearInterval(drawer);
           $('.fires').stop();
           $('.helpers').stop()
           paused = !paused;
@@ -72,7 +79,7 @@ $(document).ready(function() {
           for (var j = 0; j < helpers.length; j++) {
             fall(helpers.eq(j));
           }
-          timerId = setInterval(function() {
+          drawer = setInterval(function() {
             draw();
           }, 1000);
           msg.fadeOut();
@@ -151,10 +158,14 @@ $(document).ready(function() {
 
       if (Math.abs(playerTop - fireTop) < 40 && Math.abs(playerLeft - fireLeft) < 40) {
         console.log('it burnss');
+        // timer stops
+        endTime = Date.now();
+        calculateDuration(endTime);
+
         player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
         fires.stop();
         helpers.stop();
-        clearInterval(timerId);
+        clearInterval(drawer);
         // fires.eq(i).remove()
         // game over message
         msg.children().first().hide();
@@ -170,7 +181,7 @@ $(document).ready(function() {
       var helperTop = helpers.eq(j).offset().top;
       var helperLeft = helpers.eq(j).offset().left;
 
-      if (Math.abs(playerTop - helperTop) < 40 && Math.abs(playerLeft - helperLeft) < 40) {
+      if (Math.abs(playerTop - helperTop) < 45 && Math.abs(playerLeft - helperLeft) < 45) {
         // one catch logs more than once!!
         console.log('caught a pokemon!');
 
@@ -186,18 +197,34 @@ $(document).ready(function() {
     }
   }
 
+  var counter = 0;
+  function calculateDuration(finished) {
+    // timeDuration = (finished - startTime) / 1000; // in seconds
+    // console.log(timeDuration);
+    // $('.timer').text(parseInt(timeDuration));
+  }
+
+  function update() {}
+
+
 
   $('body').on('keydown', move)
 
   // in loop, update and make fires fall
-  var timerId = setInterval(draw, speed);
-  var caughtPokemon = setInterval(checkCollision, 100);
+  var drawer = setInterval(draw, speed);
+  var caughtPokemon = setInterval(checkCollision, 200);
+  var updateSpeed = setInterval(update, 10000);
+  var displayTime = setInterval(calculateDuration, 1000);
 
 });
 
 
 
-
+/*
+  for counting pokemons
+  counter++;
+  $('.timer').text(counter);
+*/
 
 
 /*
