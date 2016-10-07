@@ -128,26 +128,26 @@ $(document).ready(function() {
 
   function checkCollision() {
     var fires = $('.fires');
-      for (var i = 0; i < fires.length; i++ ) {
-        var fireTop = fires.eq(i).offset().top
-        var fireLeft = fires.eq(i).offset().left;
-        var playerTop = player.offset().top;
-        var playerLeft = player.offset().left;
+    for (var i = 0; i < fires.length; i++ ) {
+      var fireTop = fires.eq(i).offset().top
+      var fireLeft = fires.eq(i).offset().left;
+      var playerTop = player.offset().top;
+      var playerLeft = player.offset().left;
 
-        if (Math.abs(playerTop - fireTop) < 60 && Math.abs(playerLeft - fireLeft) < 60) {
-          console.log('it burnss');
-          player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
-          fires.stop();
-          clearInterval(timerId);
-          // fires.eq(i).remove()
-          // game over message
-          msg.children().first().hide();
-          msg.children().first().next().show();
-          // msg.children().last().show();
-          startOverMsg.show();
-          msg.fadeIn();
-        }
+      if (Math.abs(playerTop - fireTop) < 60 && Math.abs(playerLeft - fireLeft) < 60) {
+        console.log('it burnss');
+        player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
+        fires.stop();
+        clearInterval(timerId);
+        // fires.eq(i).remove()
+        // game over message
+        msg.children().first().hide();
+        msg.children().first().next().show();
+        // msg.children().last().show();
+        startOverMsg.show();
+        msg.fadeIn();
       }
+    }
   }
 
 
