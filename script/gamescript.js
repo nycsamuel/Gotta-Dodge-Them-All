@@ -95,21 +95,24 @@ $(document).ready(function() {
     sky.append(newFire1);
     fall(newFire1);
 
-    var pokemonHelper = $('<div>');
-    left = Math.round(Math.random() * (edgeWidth - 60));
-    pokemonHelper.addClass('helpers').css({
-      'position': 'absolute',
-      'background': 'url("assets/front-blastoise.gif")',
-      'background-size': 'cover',
-      'display': 'inline-block',
-      'left': left,
-      'top': top,
-      'width': width,
-      'height': height,
-      'z-index': '-1'
-    });
-    sky.append(pokemonHelper);
-    fall(pokemonHelper);
+    var rand = Math.round(Math.random() * 10);
+    if (rand === 7) {
+      var pokemonHelper = $('<div>');
+      left = Math.round(Math.random() * (edgeWidth - 60));
+      pokemonHelper.addClass('helpers').css({
+        'position': 'absolute',
+        'background': 'url("assets/front-blastoise.gif")',
+        'background-size': 'cover',
+        'display': 'inline-block',
+        'left': left,
+        'top': top,
+        'width': width,
+        'height': height,
+        'z-index': '-1'
+      });
+      sky.append(pokemonHelper);
+      fall(pokemonHelper);
+    }
 
   } // draw() end
 
@@ -120,10 +123,11 @@ $(document).ready(function() {
       if ($(this).offset().top >= desiredPosition) {
         $(this).remove();
       }
-      // $(this).css({
-      //   bottom: '-50'
-      // });
-    });
+
+      $(this).css({
+        bottom: '-50'
+      });
+    })
   }
 
   function checkCollision() {
@@ -158,11 +162,13 @@ $(document).ready(function() {
       var helperLeft = helpers.eq(j).offset().left;
 
       if (Math.abs(playerTop - helperTop) < 40 && Math.abs(playerLeft - helperLeft) < 40) {
+        // one catch logs more than once!!
         console.log('caught a pokemon!');
         helpers.eq(j).css({
           'background': 'url("assets/pokeball.gif")',
           'background-size': 'cover'
         });
+        
       }
     }
   }
@@ -176,12 +182,24 @@ $(document).ready(function() {
 
 });
 
-// class pokemon helper
-// class Pokemon {
-//   constructor() {
-//     this.width = 80;
-//     this.height = 80;
-//     this.top = 0;
-//     this.number = 7;
-//   }
-// }
+
+
+
+
+
+/*
+
+class Pokemon {
+  constructor() {
+    this.width = 80;
+    this.height = 80;
+    this.top = 0;
+    this.number = 7;
+    this.element = $('<div>')
+  }
+}
+
+  var helper = new Pokemon();
+  helper.element.css({})
+
+*/
