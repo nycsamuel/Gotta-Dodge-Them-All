@@ -1,5 +1,6 @@
 // dom content loaded
 $(document).ready(function() {
+  var gameOver = false;
   var windowWidth = $('body').width();
   var player = $('.player');
   var playerWidth = player.width();
@@ -47,9 +48,9 @@ $(document).ready(function() {
         if (!paused) {
           clearInterval(timerId);
           $('.fires').stop();
+          $('.helpers').stop()
           paused = !paused;
           msg.children().first().next().hide(); // game over msg
-          // msg.children().last().hide(); // start over button
           msg.fadeIn();
         } else {
           paused = !paused;
@@ -57,7 +58,10 @@ $(document).ready(function() {
           for (var i = 0; i < fires.length; i++ ) {
             fall(fires.eq(i));
           }
-          timerId = setInterval(draw, 1000);
+
+          timerId = setInterval(function() {
+            draw();
+          }, 1000);
           msg.fadeOut();
         }
         break;
@@ -67,8 +71,16 @@ $(document).ready(function() {
   // draw fireballs
   var edgeWidth = $(window).width();
   var edgeHeight = $(window).height();
-  var firePosition = edgeHeight;
+  var desiredPosition = edgeHeight;
   function draw() {
+    // if lucky 7 then draw pokemon to help trainer
+    // var randomNum = Math.round(Math.random() * 10);
+    // if (randomNum === 7) {
+    //   var helper = drawPokemon();
+    //   console.log(helper);
+    //   fall(helper);
+    // }
+
     var width = 80;
     var height = 80;
     var top = 0;
@@ -76,9 +88,9 @@ $(document).ready(function() {
     var sky = $('.fire-container');
 
     /* Need to make sure the fire don't overlap */
-    var $newFire1 = $('<div>');
-    $newFire1.addClass('fires');
-    $newFire1.css({
+    var newFire1 = $('<div>');
+    newFire1.addClass('fires');
+    newFire1.css({
       'position': 'absolute',
       'background': 'url("assets/fireball3.gif")',
       // 'background-color': 'purple',
@@ -90,12 +102,12 @@ $(document).ready(function() {
       'height': height,
       'z-index': -1
     });
-    sky.append($newFire1);
+    sky.append(newFire1);
 
-    var $newFire2 = $('<div>');
+    var newFire2 = $('<div>');
     left = Math.round(Math.random() * (edgeWidth - 60));
-    $newFire2.addClass('fires');
-    $newFire2.css({
+    newFire2.addClass('fires');
+    newFire2.css({
       'position': 'absolute',
       'background': 'url("assets/fireball3.gif")',
       // 'background-color': 'purple',
@@ -107,17 +119,17 @@ $(document).ready(function() {
       'height': height,
       'z-index': -1
     });
-    sky.append($newFire2);
+    sky.append(newFire2);
 
-    fall($newFire1);
-    fall($newFire2);
+    fall(newFire1);
+    fall(newFire2);
   } // draw() end
 
-  function fall(fire) {
-    // console.log(fire);
-    fire.animate({top: firePosition}, speed, function() {
-      // remove fire when it reaches the bottom
-      if ($(this).position().top >= firePosition) {
+  function fall(obj) {
+    // console.log(obj);
+    obj.animate({top: desiredPosition}, speed, function() {
+      // remove obj when it reaches the bottom
+      if ($(this).offset().top >= desiredPosition) {
         $(this).remove();
       }
       $(this).css({
@@ -128,19 +140,23 @@ $(document).ready(function() {
 
   function checkCollision() {
     var fires = $('.fires');
+    var pokemon = $('.helper');
+
+    // collision for fire
     for (var i = 0; i < fires.length; i++ ) {
       var fireTop = fires.eq(i).offset().top
       var fireLeft = fires.eq(i).offset().left;
       var playerTop = player.offset().top;
       var playerLeft = player.offset().left;
 
-      if (Math.abs(playerTop - fireTop) < 60 && Math.abs(playerLeft - fireLeft) < 60) {
+      if (Math.abs(playerTop - fireTop) < 40 && Math.abs(playerLeft - fireLeft) < 40) {
         console.log('it burnss');
         player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
         fires.stop();
         clearInterval(timerId);
         // fires.eq(i).remove()
         // game over message
+        gameOver = true;
         msg.children().first().hide();
         msg.children().first().next().show();
         // msg.children().last().show();
