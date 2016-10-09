@@ -25,7 +25,21 @@ $(document).ready(function() {
   var speed = 1000; // falling speed
   var paused = false; // start game with paused as false
   var sky = $('.fire-container');
+  var highscores = window.localStorage; // local storage of browser for saving highscore data
 
+  /* get username  by parsing the URL */
+  var url = window.location.search.substring(1);
+  var parseURL = url.split('&');
+  var uname = []; // uname[1] is the username
+  for (var x = 0; x < parseURL.length; x++) {
+    var temp = [];
+    temp = parseURL[x].split('=');
+    if (temp[0] === 'uname') {
+      uname.push(temp[0]);
+      uname.push(temp[1]);
+    }
+  }
+  var username = uname[1];
 
   /**
     * Sang Min (Samuel) Na
@@ -45,7 +59,8 @@ $(document).ready(function() {
         if (left <= 8) {
           left = 8;
         } else {
-          player.css('left', left - 15);
+          player.css('left', left - 25);
+          // player.animate({'left': left - 25}, 'fast');
         }
         break;
 
@@ -53,7 +68,9 @@ $(document).ready(function() {
         if (left >= edge) {
           left = edge;
         } else {
-          player.css('left', left + 15);
+          player.css('left', left + 25);
+          // player.animate({'left': left + 25}, 'fast');
+
         }
         break;
 
@@ -132,7 +149,7 @@ $(document).ready(function() {
     var rand = Math.round(Math.random() * 10);
     if (rand === 7) {
       var pokemonHelper = $('<div>');
-      left = Math.round(Math.random() * (windowWidth - 60));
+      left = (Math.round(Math.random() * (windowWidth - width)) + 100);
       pokemonHelper.addClass('helpers').css({
         'width': width,
         'height': height,
@@ -187,7 +204,7 @@ $(document).ready(function() {
       var fireTop = fires.eq(i).position().top;
       var fireLeft = fires.eq(i).position().left;
 
-      if (Math.abs(playerTop - fireTop) < 40 && Math.abs(playerLeft - fireLeft) < 40) {
+      if (Math.abs(playerTop - fireTop) < 60 && Math.abs(playerLeft - fireLeft) < 40) {
         console.log('it burnss');
         player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
         fires.stop();
@@ -210,9 +227,9 @@ $(document).ready(function() {
       var helperTop = helpers.eq(j).position().top;
       var helperLeft = helpers.eq(j).position().left;
 
-      if (Math.abs(playerTop - helperTop) < 45 && Math.abs(playerLeft - helperLeft) < 45) {
+      if (Math.abs(playerTop - helperTop) < 60 && Math.abs(playerLeft - helperLeft) < 40) {
         console.log('caught a pokemon!');
-        scoreCounter += 50;
+        scoreCounter += 100;
         // change class of the caught pokemon so it won't be counted
         helpers.eq(j).css({
           'background': 'url("assets/pokeball.gif")',
@@ -230,7 +247,7 @@ $(document).ready(function() {
   */
   function scoreUpdate() {
     scoreCounter++;
-    timer.text(scoreCounter);
+    timer.text('' + username + ': ' + scoreCounter);
   }
 
   /**
@@ -248,12 +265,9 @@ $(document).ready(function() {
   var drawer = setInterval(draw, speed); // create fireballs
   var collision = setInterval(checkCollision, 200); // check for collision
   var score = setInterval(scoreUpdate, 100); // increment score
-  var gameSpeed = setInterval(gameSpeed, 5000); // increase game speed every 5 seconds
+  var gameSpeed = setInterval(gameSpeed, 3000); // increase game speed every 3 seconds
 });
 
-// prevent fireball and pokemon from lapping in the same space
-// pokeball grows and disappears
-// smooth animation for player control
 // implement high score, top 10 only
 
 /*
