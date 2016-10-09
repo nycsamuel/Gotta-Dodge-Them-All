@@ -1,6 +1,6 @@
 // dom content loaded
 $(document).ready(function() {
-  // hide puase and game over msg
+  /* hide pause && game over msg before game starts */
   var gameover = undefined;
   var msg = $('.msg');
   var startOverMsg = $('h2');
@@ -9,12 +9,13 @@ $(document).ready(function() {
   startOverMsg.hide();
   msg.hide();
 
-  // score counter
+  /* score counter */
   var scoreCounter = 0;
   var timer = $('.timer');
 
-  // place player at the middle
-  var windowWidth = $('body').width();
+  /* position trainer at the middle of page */
+  var windowWidth = $(window).width();
+  var windowHeight = $(window).height();
   var player = $('.player');
   var playerWidth = player.width();
   var playerHeight = player.height();
@@ -22,40 +23,49 @@ $(document).ready(function() {
   player.css('left', playerPosition);
 
   var speed = 1000; // falling speed
-  var paused = false;
-  var edgeWidth = $(window).width();
-  var edgeHeight = $(window).height();
-  var desiredPosition = edgeHeight; // when fireball hits the bottom
+  var paused = false; // start game with paused as false
   var sky = $('.fire-container');
 
 
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * filters out specific keys pressed for game control
+    * @event, to filter out which key was pressed
+  */
   function move(event) {
-    if (gameover) {
-      // do not allow gamer to continue
-    } else {
-      var left = player.offset().left;
+    if (gameover) { /* PREVENT USER FROM MOVING */ }
+    else {
+      var left = player.position().left;
       var edge = $('body').width() - player.width();
 
       var key = event.which;
       switch (key) {
-        // left
-        case 37:
+        case 37: // left
         if (left <= 8) {
           left = 8;
         } else {
           player.css('left', left - 15);
         }
         break;
-        // right
-        case 39:
+
+        case 39: // right
         if (left >= edge) {
           left = edge;
         } else {
           player.css('left', left + 15);
         }
         break;
-        // pause
-        case 27:
+
+        /**
+          * Sang Min (Samuel) Na
+          *
+          * when paused, stop fireball, score, and gameSpeed
+          * show pause message
+          * when unpaused, start fireball, score, and gameSpeed again
+          * hide pause message
+        */
+        case 27: // pause
         if (!paused) {
           clearInterval(drawer);
           clearInterval(score);
@@ -92,41 +102,46 @@ $(document).ready(function() {
     }
   }
 
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * draw a fixed size of fireball and pokemon helper as a new div element with css styling
+    * get random position for left, range: 0 to (width of window - width of player)
+  */
   function draw() {
     var width = 80;
     var height = 80;
     var top = 0;
-    var left = Math.round(Math.random() * (edgeWidth - 60));
+    var left = Math.round(Math.random() * (windowWidth - width));
     var newFire1 = $('<div>');
     newFire1.addClass('fires').css({
-      'position': 'absolute',
+      'width': width,
+      'height': height,
       'background': 'url("assets/fireball3.gif")',
-      // 'background-color': 'purple',
       'background-size': 'cover',
       'display': 'inline-block',
       'left': left,
+      'position': 'absolute',
       'top': top,
-      'width': width,
-      'height': height,
       'z-index': '-1'
     });
     sky.append(newFire1);
     fall(newFire1);
 
-    // draw pokemon
+    // draw pokemon randomly
     var rand = Math.round(Math.random() * 10);
     if (rand === 7) {
       var pokemonHelper = $('<div>');
-      left = Math.round(Math.random() * (edgeWidth - 60));
+      left = Math.round(Math.random() * (windowWidth - 60));
       pokemonHelper.addClass('helpers').css({
-        'position': 'absolute',
+        'width': width,
+        'height': height,
         'background': 'url("assets/front-blastoise.gif")',
         'background-size': 'cover',
         'display': 'inline-block',
         'left': left,
         'top': top,
-        'width': width,
-        'height': height,
+        'position': 'absolute',
         'z-index': '-1'
       });
       sky.append(pokemonHelper);
@@ -135,30 +150,42 @@ $(document).ready(function() {
 
   } // draw() end
 
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * @obj, the created div from fall function
+    * animate objects (fireball && pokemon) to bottom of screen
+    * remove objects when it reaches to the bottom of page
+  */
   function fall(obj) {
-    // console.log(obj);
-    obj.animate({top: desiredPosition}, 3000, function() {
+    obj.animate({top: windowHeight}, 3000, function() {
       // remove obj when it reaches the bottom
-      if ($(this).offset().top >= desiredPosition) {
+      if ($(this).position().top >= windowHeight) {
         $(this).remove();
       }
-
       $(this).css({
         bottom: '-50'
       });
     })
   }
 
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * check any collions by looping through all object
+    * show game over message when collision is detected and set gameover as true
+    * increase scoreCounter when collision with pokemon is detected
+  */
   function checkCollision() {
-    var playerTop = player.offset().top;
-    var playerLeft = player.offset().left;
+    var playerTop = player.position().top;
+    var playerLeft = player.position().left;
     var fires = $('.fires');
     var helpers = $('.helpers');
 
     // collision for fire
     for (var i = 0; i < fires.length; i++ ) {
-      var fireTop = fires.eq(i).offset().top;
-      var fireLeft = fires.eq(i).offset().left;
+      var fireTop = fires.eq(i).position().top;
+      var fireLeft = fires.eq(i).position().left;
 
       if (Math.abs(playerTop - fireTop) < 40 && Math.abs(playerLeft - fireLeft) < 40) {
         console.log('it burnss');
@@ -180,8 +207,8 @@ $(document).ready(function() {
 
     // catch Pokemon
     for (var j = 0; j < helpers.length; j++) {
-      var helperTop = helpers.eq(j).offset().top;
-      var helperLeft = helpers.eq(j).offset().left;
+      var helperTop = helpers.eq(j).position().top;
+      var helperLeft = helpers.eq(j).position().left;
 
       if (Math.abs(playerTop - helperTop) < 45 && Math.abs(playerLeft - helperLeft) < 45) {
         console.log('caught a pokemon!');
@@ -196,11 +223,21 @@ $(document).ready(function() {
     }
   }
 
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * display score on set interval after incrementing
+  */
   function scoreUpdate() {
     scoreCounter++;
     timer.text(scoreCounter);
   }
 
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * the setInterval speed for drawer decreases which increases the game speed
+  */
   function gameSpeed() {
     speed -= 100;
   }
@@ -210,17 +247,16 @@ $(document).ready(function() {
 
   var drawer = setInterval(draw, speed); // create fireballs
   var collision = setInterval(checkCollision, 200); // check for collision
-  var score = setInterval(scoreUpdate, 100);
-  var gameSpeed = setInterval(gameSpeed, 5000);
+  var score = setInterval(scoreUpdate, 100); // increment score
+  var gameSpeed = setInterval(gameSpeed, 5000); // increase game speed every 5 seconds
 });
 
-
+// prevent fireball and pokemon from lapping in the same space
+// pokeball grows and disappears
+// smooth animation for player control
+// implement high score, top 10 only
 
 /*
-  for counting pokemons
-  counter = 0;
-  counter++;
-  $('.timer').text(counter);
 
 class Pokemon {
   constructor() {
