@@ -9,6 +9,15 @@ $(document).ready(function() {
   startOverMsg.hide();
   msg.hide();
 
+  /* object of pokemons */
+  var pokemons = {
+    '0': 'url("assets/pokemon/bulb.gif")',
+    '1': 'url("assets/pokemon/dratini.gif")',
+    '2': 'url("assets/pokemon/front-blastoise.gif")',
+    '3': 'url("assets/pokemon/magikarp.gif")',
+    '4': 'url("assets/pokemon/mew.gif")',
+  };
+
   /* score counter */
   var scoreCounter = 0;
   var timer = $('.timer');
@@ -148,13 +157,15 @@ $(document).ready(function() {
 
     // draw pokemon randomly
     var rand = Math.round(Math.random() * 10);
+    var pokemonSelector = Math.round(Math.random() * 4);
+    var pokemonPic = pokemons[pokemonSelector];
     if (rand === 7) {
       var pokemonHelper = $('<div>');
       left = (Math.round(Math.random() * (windowWidth - width)) + 100);
       pokemonHelper.addClass('helpers').css({
         'width': width,
         'height': height,
-        'background': 'url("assets/front-blastoise.gif")',
+        'background': pokemonPic,
         'background-size': 'cover',
         'display': 'inline-block',
         'left': left,
