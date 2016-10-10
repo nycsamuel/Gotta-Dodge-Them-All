@@ -28,13 +28,13 @@ body {
 
 .flex-item {
   font-size: 6em;
-  color: purple;
+  color: orange;
   display: flex;
   justify-content: center;
 }
 
 .start-over {
-  border: 2px solid black;
+  border: 2px solid orange;
   box-sizing: border-box;
   padding: 10px;
   font-size: 36px;
@@ -44,6 +44,7 @@ body {
 }
 
 a {
+  color: orange;
   text-decoration: none;
 }
 

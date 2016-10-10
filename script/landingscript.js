@@ -14,12 +14,12 @@ $(document).ready(function() {
 
 
 
-  
+
 
 
   /* when user clicks on 'welcome', it will grow in size and fade away to show formContainer */
   function welcomeEffects() {
-    $(this).animate({'font-size': '1.5em'}, 2000);
+    $(this).animate({'font-size': '1.2em'}, 2000);
     $(this).fadeOut(1000, function() {
       formContainer.fadeIn('slow');
     });
