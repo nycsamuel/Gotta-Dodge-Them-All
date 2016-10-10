@@ -1,6 +1,7 @@
 body {
   background: url('../assets/charzard.gif');
   background-size: cover;
+  font-family: 'Press Start 2P', cursive;
   overflow: hidden;
   text-align: center;
 }
@@ -18,8 +19,8 @@ body {
 .flex-container {
   width: 100%;
   height: 300px;
-  background-color: rgba(211, 211, 211, 0.8);
-  color: white;
+  background-color: rgba(255, 153, 0, .8);
+  /*background-color: #FFFF66;*/
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -28,36 +29,42 @@ body {
 
 .flex-item {
   font-size: 6em;
-  color: orange;
+  /*color: orange;*/
+  color: #FFFF66;
   display: flex;
   justify-content: center;
 }
 
 .start-over {
-  border: 2px solid orange;
+  border: 2px solid yellow;
   box-sizing: border-box;
-  padding: 10px;
-  font-size: 36px;
-  width: 250px;
-  position: absolute;
+  font-size: 32px;
   margin-top: -80px;
+  padding: 10px;
+  position: absolute;
+  width: 400px;
 }
 
 a {
-  color: orange;
+  /*color: orange;*/
+  color: #FFFF66;
   text-decoration: none;
+}
+
+a:hover {
+  font-size: 36px;
 }
 
 .timer {
   min-width: 200px;
   max-width: 300px;
-  height: 50px;
-  background-color: yellow;
+  background-color: #FF9900;
+  border: 2px solid yellow;
+  /*border-radius: 5px;*/
+  color: #FFFF66;
   opacity: .8;
-  border: 2px solid black;
-  border-radius: 5px;
+  padding: 5px;
   text-align: center;
-  font-size: 36px;
 }
 
 .caught {

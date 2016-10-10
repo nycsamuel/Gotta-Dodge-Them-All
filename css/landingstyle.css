@@ -3,6 +3,7 @@ body {
   padding: 0;
   background: url('../assets/volcano.jpg');
   background-size: cover;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .parent-container {
@@ -25,7 +26,8 @@ body {
 
 .welcome {
   font-size: 5em;
-  color: orange;
+  /*color: orange;*/
+  color: #FFFF66;
 }
 
 .welcome-container h1 {
@@ -48,7 +50,8 @@ form, input {
   height: 60px;
   border-radius: 2px;
   box-sizing: border-box;
-  color: orange;
+  /*color: orange;*/
+  /*color: #FFFF66;*/
   font-size: 20px;
   margin: 5px auto;
 }
@@ -63,8 +66,8 @@ input[type=text] {
 
 input[type=submit] {
   /*background-color: #4CAF50;*/
-  background-color: orange;
-  color: lightgray;
+  background-color: #FF9900;
+  color: #FFFF66;
 }
 
 .form-container, .flex-container {
@@ -72,7 +75,8 @@ input[type=submit] {
 }
 
 p {
-  color: orange;
+  /*color: orange;*/
+  color: #FFFF66;
   font-size: 24px;
   text-align: center;
 }

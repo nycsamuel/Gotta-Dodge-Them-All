@@ -9,7 +9,7 @@ $(document).ready(function() {
   startOverMsg.hide();
   msg.hide();
 
-  /* object of pokemons */
+  /* object of pokemons for random catch */
   var pokemons = {
     '0': 'url("assets/pokemon/bulb.gif")',
     '1': 'url("assets/pokemon/dratini.gif")',
@@ -217,6 +217,10 @@ $(document).ready(function() {
       var fireTop = fires.eq(i).position().top;
       var fireLeft = fires.eq(i).position().left;
 
+      /**
+        * @Daniel J. Pease
+        * helped with the equation for collion detection
+      */
       if (Math.abs(playerTop - fireTop) < 50 && Math.abs(playerLeft - fireLeft) < 40) {
         console.log('it burnss');
         player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
