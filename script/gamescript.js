@@ -204,7 +204,7 @@ $(document).ready(function() {
       var fireTop = fires.eq(i).position().top;
       var fireLeft = fires.eq(i).position().left;
 
-      if (Math.abs(playerTop - fireTop) < 60 && Math.abs(playerLeft - fireLeft) < 40) {
+      if (Math.abs(playerTop - fireTop) < 50 && Math.abs(playerLeft - fireLeft) < 40) {
         console.log('it burnss');
         player.css({'background': 'url("assets/dead.gif")', 'background-size': '60px 60px'});
         fires.stop();
@@ -256,7 +256,13 @@ $(document).ready(function() {
     * the setInterval speed for drawer decreases which increases the game speed
   */
   function gameSpeed() {
-    speed -= 100;
+    speed -= 50;
+    if (speed <= 200) {
+      speed = 200;
+    }
+    clearInterval(drawer);
+    drawer = setInterval(draw, speed);
+    console.log('speeding', speed);
   }
 
 
