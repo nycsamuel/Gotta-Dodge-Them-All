@@ -26,6 +26,7 @@ $(document).ready(function() {
   var paused = false; // start game with paused as false
   var sky = $('.fire-container');
   var highscores = window.localStorage; // local storage of browser for saving highscore data
+  var storageKey = 0;
 
   /* get username  by parsing the URL */
   var url = window.location.search.substring(1);
@@ -192,6 +193,7 @@ $(document).ready(function() {
     * check any collions by looping through all object
     * show game over message when collision is detected and set gameover as true
     * increase scoreCounter when collision with pokemon is detected
+    * sets highscores using browser's local storage
   */
   function checkCollision() {
     var playerTop = player.position().top;
@@ -219,6 +221,11 @@ $(document).ready(function() {
         startOverMsg.show();
         msg.fadeIn();
         gameover = true;
+
+        // local storage
+        storageKey++;
+        highscores.setItem('' + storageKey, '' + username + ' ' + scoreCounter);
+        console.log(highscores.getItem('uname'));
       }
     }
 
