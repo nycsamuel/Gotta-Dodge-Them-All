@@ -94,9 +94,9 @@ $(document).ready(function() {
         */
         case 27: // pause
         if (!paused) {
-          clearInterval(drawer);
           clearInterval(score);
           clearInterval(gameSpeed);
+          clearInterval(drawer);
           $('.fires').stop();
           $('.helpers').stop();
 
@@ -120,9 +120,9 @@ $(document).ready(function() {
           }
           msg.fadeOut();
 
-          drawer = setInterval(draw, speed);
           score = setInterval(scoreUpdate, 100);
-          gameSpeed = setInterval(gameSpeed, 5000);
+          gameSpeed = setInterval(gameSpeed, 3000);
+          drawer = setInterval(draw, speed);
         }
         break;
       }
