@@ -16,6 +16,9 @@ $(document).ready(function() {
     '2': 'url("assets/pokemon/front-blastoise.gif")',
     '3': 'url("assets/pokemon/magikarp.gif")',
     '4': 'url("assets/pokemon/mew.gif")',
+    '5': 'url("assets/pokemon/abra.png")',
+    '6': 'url("assets/pokemon/pikachu.png")',
+    '7': 'url("assets/pokemon/poliwhirl.png")'
   };
 
   /* score counter */
@@ -157,11 +160,11 @@ $(document).ready(function() {
 
     // draw pokemon randomly
     var rand = Math.round(Math.random() * 10);
-    var pokemonSelector = Math.round(Math.random() * 4);
+    var pokemonSelector = Math.round(Math.random() * 7);
     var pokemonPic = pokemons[pokemonSelector];
     if (rand === 7) {
       var pokemonHelper = $('<div>');
-      left = (Math.round(Math.random() * (windowWidth - width)) + 100);
+      left = Math.round(Math.random() * (windowWidth - width));
       pokemonHelper.addClass('helpers').css({
         'width': width,
         'height': height,
