@@ -35,3 +35,4 @@ Challenges && Unsolved Problems
 - Trainer movement is jerky with css function and using the animate function for smoother movement results in failure.
 - Object oriented programming design was a challenge to apply.
 - The start over button does not save the username.
+- Media queries
