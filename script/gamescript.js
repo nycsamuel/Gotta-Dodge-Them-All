@@ -19,10 +19,10 @@ $(document).ready(function() {
     '5': 'url("assets/pokemon/abra.png")',
     '6': 'url("assets/pokemon/pikachu.png")',
     '7': 'url("assets/pokemon/poliwhirl.png")',
-    '8': 'url("assetes/pokemon/clefairy.png")',
-    '9': 'url("assetes/pokemon/dragonite.png")',
-    '10': 'url("assetes/pokemon/psyduck.png")',
-    '11': 'url("assetes/pokemon/vaporean.png")'
+    '8': 'url("assets/pokemon/clefairy.png")',
+    '9': 'url("assets/pokemon/dragonite.png")',
+    '10': 'url("assets/pokemon/psyduck.png")',
+    '11': 'url("assets/pokemon/vaporean.png")'
   };
 
   /* score counter */
@@ -112,7 +112,7 @@ $(document).ready(function() {
         case 27: // pause
         if (!paused) {
           clearInterval(score);
-          clearInterval(gameSpeed);
+          clearInterval(gameSpeedID);
           clearInterval(drawer);
           $('.fires').stop();
           $('.helpers').stop();
@@ -138,7 +138,7 @@ $(document).ready(function() {
           msg.fadeOut();
 
           score = setInterval(scoreUpdate, 100);
-          gameSpeed = setInterval(gameSpeed, 3000);
+          gameSpeedID = setInterval(gameSpeed, 3000);
           drawer = setInterval(draw, speed);
         }
         break;
@@ -245,7 +245,7 @@ $(document).ready(function() {
         helpers.stop();
         clearInterval(drawer);
         clearInterval(score);
-        clearInterval(gameSpeed);
+        clearInterval(gameSpeedID);
 
         // game over message
         msg.children().first().hide();
@@ -310,7 +310,7 @@ $(document).ready(function() {
   var drawer = setInterval(draw, speed); // create fireballs
   var collision = setInterval(checkCollision, 200); // check for collision
   var score = setInterval(scoreUpdate, 100); // increment score
-  var gameSpeed = setInterval(gameSpeed, 3000); // increase game speed every 3 seconds
+  var gameSpeedID = setInterval(gameSpeed, 3000); // increase game speed every 3 seconds
 });
 
 // implement high score, top 10 only
