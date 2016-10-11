@@ -18,7 +18,11 @@ $(document).ready(function() {
     '4': 'url("assets/pokemon/mew.gif")',
     '5': 'url("assets/pokemon/abra.png")',
     '6': 'url("assets/pokemon/pikachu.png")',
-    '7': 'url("assets/pokemon/poliwhirl.png")'
+    '7': 'url("assets/pokemon/poliwhirl.png")',
+    '8': 'url("assetes/pokemon/clefairy.png")',
+    '9': 'url("assetes/pokemon/dragonite.png")',
+    '10': 'url("assetes/pokemon/psyduck.png")',
+    '11': 'url("assetes/pokemon/vaporean.png")'
   };
 
   /* score counter */
@@ -40,19 +44,29 @@ $(document).ready(function() {
   var highscores = window.localStorage; // local storage of browser for saving highscore data
   var storageKey = 0;
 
-  /* get username  by parsing the URL */
-  var url = window.location.search.substring(1);
-  var parseURL = url.split('&');
-  var uname = []; // uname[1] is the username
-  for (var x = 0; x < parseURL.length; x++) {
-    var temp = [];
-    temp = parseURL[x].split('=');
-    if (temp[0] === 'uname') {
-      uname.push(temp[0]);
-      uname.push(temp[1]);
+  var username = getUsername();
+
+  /**
+    * Sang Min (Samuel) Na
+    *
+    * the search URL is passed through form get method
+    * get username by parsing the URL
+  */
+  function getUsername() {
+    var url = window.location.search.substring(1);
+    var parseURL = url.split('&');
+    var uname = []; // uname[1] is the username
+    for (var x = 0; x < parseURL.length; x++) {
+      var temp = [];
+      temp = parseURL[x].split('=');
+      if (temp[0] === 'uname') {
+        uname.push(temp[0]);
+        uname.push(temp[1]);
+      }
     }
+    // var username = uname[1];
+    return uname[1];
   }
-  var username = uname[1];
 
   /**
     * Sang Min (Samuel) Na
@@ -160,7 +174,7 @@ $(document).ready(function() {
 
     // draw pokemon randomly
     var rand = Math.round(Math.random() * 10);
-    var pokemonSelector = Math.round(Math.random() * 7);
+    var pokemonSelector = Math.round(Math.random() * 11);
     var pokemonPic = pokemons[pokemonSelector];
     if (rand === 7) {
       var pokemonHelper = $('<div>');
@@ -282,8 +296,8 @@ $(document).ready(function() {
   */
   function gameSpeed() {
     speed -= 50;
-    if (speed <= 200) {
-      speed = 200;
+    if (speed <= 100) {
+      speed = 100;
     }
     clearInterval(drawer);
     drawer = setInterval(draw, speed);
