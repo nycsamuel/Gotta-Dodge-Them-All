@@ -296,8 +296,8 @@ $(document).ready(function() {
   */
   function gameSpeed() {
     speed -= 50;
-    if (speed <= 200) {
-      speed = 200;
+    if (speed <= 100) {
+      speed = 100;
     }
     clearInterval(drawer);
     drawer = setInterval(draw, speed);
