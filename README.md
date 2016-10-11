@@ -34,3 +34,4 @@ Challenges && Unsolved Problems
 - Used local storage for preserving high score data. However, unable to complete due to time.
 - Trainer movement is jerky with css function and using the animate function for smoother movement results in failure.
 - Object oriented programming design was a challenge to apply.
+- The start over button does not save the username.
