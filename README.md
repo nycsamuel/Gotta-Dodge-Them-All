@@ -16,7 +16,7 @@ Technologies Used:
 - jQuery
   - Used to manipulate objects for this game and for visual effects of DOM nodes for better gaming experience.
 
-The gh-page URL: < https://smna15.github.io/Gotta-Dodge-Them-All/ >
+The gh-page URL: < https://nycsamuel.github.io/Gotta-Dodge-Them-All/ >
 
 The input forms site: < http://www.w3schools.com/css/css_form.asp >
 
